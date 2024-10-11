@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <title>My Calculator</title>
+        <style>
+            body {
+                background-color: rgb(214, 146, 63);
+            }
+            h1 {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                color: rgb(42, 27, 8);
+                font-size: 40px;
+            }
+            .calculator-grid {
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                grid-template-rows: repeat(7, 1fr);
+                grid-gap: 1px;
+                background-color: rgb(91, 91, 187);
+                border-style: double;
+            }
+            .grid-container {
+                display: grid;
+                align-items: center;
+                justify-content: center;
+            }
+            textarea {
+                grid-column: span 4;
+
+            }
+            
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: center;">My Calculator</h1>
+            <div class="grid-container">
+                <div class="calculator-grid">
+                <textarea type="text" id="inputText"></textarea>
+
+                <input type="button" value="C" onclick="operation('C')">
+                <input type="button" value="M+" onclick="mP()">
+                <input type="button" value="MC" onclick="mC()">
+                <input type="button" value="MR" onclick="mR()">
+
+                <input type="button" name="1" value="1" onclick="operation('1')">
+                <input type="button" name="2" value="2" onclick="operation('2')">
+                <input type="button" name="3" value="3" onclick="operation('3')">
+                <input type="button" name="/" value="/" onclick="operation('/')">
+
+                <input type="button" name="4" value="4" onclick="operation('4')">
+                <input type="button" name="5" value="5" onclick="operation('5')">
+                <input type="button" name="6" value="6" onclick="operation('6')">
+                <input type="button" name="-" value="-" onclick="operation('-')">
+            
+                <input type="button" name="7" value="7" onclick="operation('7')">
+                <input type="button" name="8" value="8" onclick="operation('8')">
+                <input type="button" name="9" value="9" onclick="operation('9')">
+                <input type="button" name="+" value="+" onclick="operation('+')">
+            
+                <input type="button" name="." value="." onclick="operation('.')">
+                <input type="button" name="0" value="0" onclick="operation('0')">
+                <input type="button" name="=" value="=" onclick="operation('=')">
+                <input type="button" name="*" value="*" onclick="operation('*')">
+
+                <input type="button" name="SQRT" value="SQRT" onclick="operation('sqrt')">
+                <input type="button" name="PI" value="PI" onclick="operation('pi')">
+                <input type="button" name="ROUND" value="ROUND" onclick="operation('round')">
+                <input type="button" name="LOG" value="LOG" onclick="operation('log')">
+                <input type="button" name="DE" value="DE" onclick="backspace()">
+            </div>
+            </div>
+            <script>
+                let memory = 0;
+                const input = document.getElementById("inputText");
+
+
+                function calculate(expression) {
+                    try {
+                        return eval(expression);
+                    } catch {
+                        return Error;
+                    }
+                }
+
+                function mP(){
+                    memory = parseFloat(input.value)
+                }
+                function mC(){
+                    memory = 0;
+                }
+                function mR(){
+                    input.value += memory;
+                }
+
+                function backspace(){
+                    input.value = input.value.slice(0,-1);
+                }
+
+                function operation(buttonValue) {
+                    if (buttonValue == "C"){
+                        input.value = "";
+                    } else if  (buttonValue == "=") {
+                       input.value = calculate(input.value);
+                    } else if (buttonValue == "sqrt"){
+                        input.value = Math.sqrt(parseFloat(input.value));
+                    } else if (buttonValue == "pi"){
+                        input.value = Math.PI;
+                    } else if (buttonValue == "round"){
+                        input.value = Math.round(parseFloat(input.value));
+                    }else if (buttonValue == "log"){
+                        input.value = Math.log(parseFloat(input.value));
+                    }
+                    else {
+                        input.value += buttonValue;
+                    }
+                }
+                buttons.forEach(button => {
+                    let buttonValue = button.value;
+                    button.addEventListener("click", function() {
+                        operation(buttonValue);
+                    });
+                });
+            </script>
+    </body>
+</html>
